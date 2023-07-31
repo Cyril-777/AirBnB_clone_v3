@@ -12,15 +12,18 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 CORS(app, resources={'/*': {'origins': "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def close_storage(exception):
     """Closes the storage on teardown."""
     storage.close()
 
+
 @app.errorhandler(404)
 def error_404(error):
     """404 page not found handling"""
     return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
